@@ -13,7 +13,7 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live gr
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
-vim.keymap.set('n', '<leader>nf', ':Neotree<CR>', { desc = 'Open Neotree' })
+vim.keymap.set('n', '<leader>nf', ':Neotree float <CR>', { desc = 'Open Neotree' })
 vim.keymap.set('n', '<leader>nt', ':ToggleTerm<CR>', { desc = 'Open Terminal' })
 
 vim.keymap.set('n', '<leader>kk', '<C-w>k', { desc = "Move to upper window" })
