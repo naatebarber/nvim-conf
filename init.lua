@@ -14,7 +14,20 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 vim.keymap.set('n', '<leader>nf', ':Neotree float <CR>', { desc = 'Open Neotree' })
-vim.keymap.set('n', '<leader>nt', ':ToggleTerm<CR>', { desc = 'Open Terminal' })
+
+-- vim.keymap.set('n', '<leader>nt', ':ToggleTerm<CR>', { desc = 'Open Terminal' })
+vim.keymap.set(
+	'n',
+	'<leader>nt', 
+	function()
+		local count = vim.v.count
+		if count == 0 then
+			count = 1
+		end
+		vim.cmd("ToggleTerm" .. count)
+	end, 
+	{ desc = 'Open Terminal' }
+)
 
 vim.keymap.set('n', '<leader>kk', '<C-w>k', { desc = "Move to upper window" })
 vim.keymap.set('n', '<leader>jj', '<C-w>j', { desc = "Move to lower window" })
