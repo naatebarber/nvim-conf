@@ -36,3 +36,22 @@ vim.keymap.set('n', '<leader>ll', '<C-w>l', { desc = "Move to right window" })
 
 
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
+require("lspconfig").rust_analyzer.setup({
+	settings = {
+		rust_analyzer = {
+			useLibraryCodeForTypes = true,
+			autoSearchPaths = true,
+			autoImportCompletions = false,
+			reportMissingImports = true,
+			followImportForHints = true,
+
+			cargo = {
+				allFeatures = true,
+			},
+			checkOnSave = {
+				command = "cargo clippy",
+			},
+		},
+	},
+})
