@@ -55,3 +55,10 @@ require("lspconfig").rust_analyzer.setup({
 		},
 	},
 })
+
+require("lspconfig").ts_ls.setup({
+	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+	cmd = { "typescript-language-server", "--stdio" }
+})
+
+require("lspconfig").pyright.setup({})
