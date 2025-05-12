@@ -9,7 +9,12 @@ return {
 		'nvim-telescope/telescope.nvim', tag = '0.1.8'
 	},
 	{
-		'akinsho/toggleterm.nvim', version = "*", config = true
+		'akinsho/toggleterm.nvim', 
+		version = "*", 
+		config = true,
+		opts = {
+			shell = "bash --login"
+		}
 	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
