@@ -38,8 +38,9 @@ vim.keymap.set('n', '<leader>ll', '<C-w>l', { desc = "Move to right window" })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
 -- Language Servers
+local lspconfig = require("lspconfig")
 
-require("lspconfig").rust_analyzer.setup({
+lspconfig.rust_analyzer.setup({
 	settings = {
 		rust_analyzer = {
 			useLibraryCodeForTypes = true,
@@ -58,12 +59,13 @@ require("lspconfig").rust_analyzer.setup({
 	},
 })
 
-require("lspconfig").ts_ls.setup({
-	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-	cmd = { "typescript-language-server", "--stdio" }
+lspconfig.ts_ls.setup({
+	filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript.jsx", "javascriptreact", "javascript" },
+	cmd = { "typescript-language-server", "--stdio" },
+	root_dir = lspconfig.util.root_pattern("tsconfig.json"), 
 })
 
-require("lspconfig").pyright.setup({})
+lspconfig.pyright.setup({})
 
 -- Theme
 
