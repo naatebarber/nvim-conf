@@ -37,6 +37,8 @@ vim.keymap.set('n', '<leader>ll', '<C-w>l', { desc = "Move to right window" })
 
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
+-- Language Servers
+
 require("lspconfig").rust_analyzer.setup({
 	settings = {
 		rust_analyzer = {
@@ -62,3 +64,9 @@ require("lspconfig").ts_ls.setup({
 })
 
 require("lspconfig").pyright.setup({})
+
+-- Theme
+
+require("neo-tree").setup({
+    popup_border_style = "rounded"
+})
