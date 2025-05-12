@@ -98,6 +98,12 @@ return {
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
+			require("rose-pine").setup {
+				highlight_groups = {
+					['String'] = { fg = "#27d653" }
+				}
+			}
+
 			vim.cmd("colorscheme rose-pine")
 		end
 	},
