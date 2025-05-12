@@ -70,3 +70,5 @@ require("lspconfig").pyright.setup({})
 require("neo-tree").setup({
     popup_border_style = "rounded"
 })
+
+require("lualine").setup()
