@@ -38,6 +38,7 @@ vim.keymap.set('n', '<leader>ll', '<C-w>l', { desc = "Move to right window" })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
 -- Language Servers
+
 local lspconfig = require("lspconfig")
 
 lspconfig.rust_analyzer.setup({
@@ -77,3 +78,21 @@ require("neo-tree").setup({
 })
 
 require("lualine").setup()
+
+-- Diagnostics
+
+vim.diagnostic.config({
+  virtual_text = {
+		prefix = '●',
+		spacing = 2,
+	}, -- Show inline error descriptions
+  signs = true,        -- Show signs in the gutter
+  underline = true,    -- Underline diagnostics
+  update_in_insert = false, -- Update diagnostics insert mode
+  severity_sort = true, -- Sort diagnostics by severity
+})
+
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic float' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Populate diagnostics list' })
