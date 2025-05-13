@@ -3,10 +3,10 @@ local hsl = lush.hsl
 
 local theme = lush(function()
 	return {
-		Normal { 
-			bg = "black", 
-		}
-	} 
+		Normal({
+			bg = "black",
+		}),
+	}
 end)
 
 return theme

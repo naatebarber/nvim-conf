@@ -7,3 +7,5 @@ echo "Installing pyright via npm"
 sudo npm i -g pyright
 echo "Installing ripgrep"
 cargo install ripgrep
+echo "Installing stylua"
+cargo install stylua

@@ -7,35 +7,29 @@ vim.opt.expandtab = false
 vim.opt.number = false
 vim.g.mapleader = " "
 
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
-vim.keymap.set('n', '<leader>nf', ':Neotree float <CR>', { desc = 'Open Neotree' })
+vim.keymap.set("n", "<leader>nf", ":Neotree float <CR>", { desc = "Open Neotree" })
 
 -- vim.keymap.set('n', '<leader>nt', ':ToggleTerm<CR>', { desc = 'Open Terminal' })
-vim.keymap.set(
-	'n',
-	'<leader>nt', 
-	function()
-		local count = vim.v.count
-		if count == 0 then
-			count = 1
-		end
-		vim.cmd("ToggleTerm" .. count)
-	end, 
-	{ desc = 'Open Terminal' }
-)
+vim.keymap.set("n", "<leader>nt", function()
+	local count = vim.v.count
+	if count == 0 then
+		count = 1
+	end
+	vim.cmd("ToggleTerm" .. count)
+end, { desc = "Open Terminal" })
 
-vim.keymap.set('n', '<leader>kk', '<C-w>k', { desc = "Move to upper window" })
-vim.keymap.set('n', '<leader>jj', '<C-w>j', { desc = "Move to lower window" })
-vim.keymap.set('n', '<leader>hh', '<C-w>h', { desc = "Move to left window" })
-vim.keymap.set('n', '<leader>ll', '<C-w>l', { desc = "Move to right window" })
+vim.keymap.set("n", "<leader>kk", "<C-w>k", { desc = "Move to upper window" })
+vim.keymap.set("n", "<leader>jj", "<C-w>j", { desc = "Move to lower window" })
+vim.keymap.set("n", "<leader>hh", "<C-w>h", { desc = "Move to left window" })
+vim.keymap.set("n", "<leader>ll", "<C-w>l", { desc = "Move to right window" })
 
-
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 -- Language Servers
 
@@ -63,7 +57,7 @@ lspconfig.rust_analyzer.setup({
 lspconfig.ts_ls.setup({
 	filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript.jsx", "javascriptreact", "javascript" },
 	cmd = { "typescript-language-server", "--stdio" },
-	root_dir = lspconfig.util.root_pattern("tsconfig.json"), 
+	root_dir = lspconfig.util.root_pattern("tsconfig.json"),
 })
 
 lspconfig.pyright.setup({})
@@ -71,10 +65,10 @@ lspconfig.pyright.setup({})
 -- Theme
 
 require("neo-tree").setup({
-  popup_border_style = "rounded",
+	popup_border_style = "rounded",
 	window = {
-		position = "float"
-	}
+		position = "float",
+	},
 })
 
 require("lualine").setup()
@@ -82,17 +76,17 @@ require("lualine").setup()
 -- Diagnostics
 
 vim.diagnostic.config({
-  virtual_text = {
-		prefix = '●',
+	virtual_text = {
+		prefix = "●",
 		spacing = 2,
 	}, -- Show inline error descriptions
-  signs = true,        -- Show signs in the gutter
-  underline = true,    -- Underline diagnostics
-  update_in_insert = false, -- Update diagnostics insert mode
-  severity_sort = true, -- Sort diagnostics by severity
+	signs = true, -- Show signs in the gutter
+	underline = true, -- Underline diagnostics
+	update_in_insert = false, -- Update diagnostics insert mode
+	severity_sort = true, -- Sort diagnostics by severity
 })
 
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
-vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic float' })
-vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Populate diagnostics list' })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, { desc = "Show diagnostic float" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Populate diagnostics list" })

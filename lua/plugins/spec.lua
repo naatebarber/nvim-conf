@@ -6,15 +6,16 @@ return {
 		end,
 	},
 	{
-		'nvim-telescope/telescope.nvim', tag = '0.1.8'
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.8",
 	},
 	{
-		'akinsho/toggleterm.nvim', 
-		version = "*", 
+		"akinsho/toggleterm.nvim",
+		version = "*",
 		config = true,
 		opts = {
-			shell = "bash --login"
-		}
+			shell = "bash --login",
+		},
 	},
 	{
 		"nvim-neo-tree/neo-tree.nvim",
@@ -23,7 +24,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
-			-- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+			{ "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		lazy = false, -- neo-tree will lazily load itself
 		---@module "neo-tree"
@@ -52,71 +53,118 @@ return {
 	},
 	{ "nvim-tree/nvim-web-devicons", opts = {} },
 	{
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' }
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 	{
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    config = true
-    -- use opts = {} for passing setup options
-    -- this is equivalent to setup({}) function
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+		-- use opts = {} for passing setup options
+		-- this is equivalent to setup({}) function
 	},
 
 	-- Language Server and Autocompletion
 
 	{
-		"neovim/nvim-lspconfig"
+		"neovim/nvim-lspconfig",
 	},
 	{
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-			{'hrsh7th/cmp-buffer'},
-			{'hrsh7th/cmp-nvim-lsp'},
-    },
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			{ "hrsh7th/cmp-buffer" },
+			{ "hrsh7th/cmp-nvim-lsp" },
+		},
 		opts = function()
 			local cmp = require("cmp")
 			return {
 				snippet = {
 					expand = function(args)
 						vim.snippet.expand(args.body)
-					end
+					end,
 				},
 				window = {
 					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered()
+					documentation = cmp.config.window.bordered(),
 				},
 				mapping = cmp.mapping.preset.insert({
-					['<C-b>'] = cmp.mapping.scroll_docs(-4),
-					['<C-f>'] = cmp.mapping.scroll_docs(4),
-					['<C-Space>'] = cmp.mapping.complete(),
-					['<C-e>'] = cmp.mapping.abort(),
-					['<Tab>'] = cmp.mapping.confirm({ select = true }),
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 				}, {
-					{ name = "buffer" }
-				})
+					{ name = "buffer" },
+				}),
 			}
-		end
+		end,
 	},
-	
+
 	-- Theme
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
-			require("rose-pine").setup {
+			require("rose-pine").setup({
 				highlight_groups = {
-					['String'] = { fg = "#27d653" }
-				}
-			}
+					["String"] = { fg = "#27d653" },
+				},
+			})
 
 			vim.cmd("colorscheme rose-pine")
-		end
+		end,
 	},
-	{ 
-		"rktjmp/lush.nvim", 
-	}
+	{
+		"rktjmp/lush.nvim",
+	},
+	{
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		config = function()
+			require("dashboard").setup({
+				theme = "doom",
+				config = {
+					header = {
+						"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⢿⡿⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+						"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣠⡼⣯⡿⣽⡷⣿⢿⡿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+						"                  ⠀⠀⠀⠀⠀⠀⠀⠐⣿⣽⣷⡟⣯⣿⣽⣯⣿⣽⠂⠀⢠⣶⣿⡟⣦⠀⣶⣶⣶⣶⡄⠀⠀",
+						"                  ⠀⠀⠀⠀⠀⠀⠀⠀⢻⣽⣾⣻⠏⠀⠈⣿⣞⠟⢀⣴⣿⣻⢾⣽⣟⡿⣯⢿⣽⢯⣷⠀⠀",
+						"                  ⠀⠀⠀⠀⠀⡀⠀⡀⢀⠻⣾⡽⣷⠀⠀⠸⣻⠀⣸⣟⠾⣽⣯⠷⣻⣽⣟⡿⣾⣻⢧⠀⠀",
+						"                  ⠀⠀⠀⢠⣾⣇⣀⢧⣨⣇⣏⡙⠯⣧⡄⠀⣟⠀⡿⠀⠀⠈⠀⠀⢀⣿⢾⣻⡷⣟⣿⠃⠀",
+						"                  ⠀⠀⠀⠘⢷⡏⠐⠊⠰⠃⠈⠛⢷⡷⣄⡀⠀⠀⡅⠀⢀⣠⣶⡿⠻⠏⢛⡓⠛⠋⠁⠀⠀",
+						"                  ⠀⠀⢀⣤⣦⣴⡶⣶⢶⣴⣤⣀⠀⠙⢟⡿⣦⠀⠀⠀⠛⣉⣴⡴⣞⡿⣟⣿⣻⣗⣦⠀⠀",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀    nv    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀         ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+						"⠀⢀⣾⡿⣽⣯⢷⠛⠈⠉⠛⠛⠂⠀⠘⢷⣻⠀⠀⠀⠒⠛⠉⠁⢻⡷⣟⣯⡿⣽⢿⡄                   ",
+						"⣠⣿⢯⣟⣷⣻⢿⣤⣤⡤⠤⠶⣶⠆⠀⠀⠀⠀⣠⡀⠀⠀⠀⠀⠉⠙⢻⣽⣻⢯⣟⡿⡄                  ",
+						"⠙⠋⢿⣻⣞⣯⣿⣽⠚⢁⣤⡾⠁⠀⠀⠀⣾⠀⣿⣇⠀⠀⢰⣦⣀⣠⣼⢯⣟⡿⣽⣻⢿                  ",
+						"⠀⠀⠀⠀⠀⠀⠀⣿⡽⣟⣾⣯⡷⣟⣧⣤⣿⣻⡀⠹⣟⣾⡽⣿⣞⡿⣯⠃⠉⠉⠁⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠻⠻⢿⣧⣟⡿⣿⣻⢧⣟⣧⡇⠀⠘⠟⣿⣧⢿⠻⠃⠀⠀⠀⠀⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣞⣿⣳⣿⣻⣽⢯⡇⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⣾⣽⡾⠙⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+						"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                   ",
+					},
+					center = {
+						{
+							-- icon = 'ueae9',
+							-- icon_hl = 'group',
+							-- desc_hl = 'group',
+							-- key_hl = 'group',
+							-- key_format = ' [%s]', -- `%s` will be substituted with value of `key`
+							desc = "Recent Files",
+							key = "r",
+							action = "Telescope oldfiles",
+						},
+					},
+					vertical_center = true,
+				},
+			})
+		end,
+		dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	},
 }
