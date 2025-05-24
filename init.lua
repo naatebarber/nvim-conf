@@ -15,7 +15,6 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help ta
 
 vim.keymap.set("n", "<leader>nf", ":Neotree float <CR>", { desc = "Open Neotree" })
 
--- vim.keymap.set('n', '<leader>nt', ':ToggleTerm<CR>', { desc = 'Open Terminal' })
 vim.keymap.set("n", "<leader>nt", function()
 	local count = vim.v.count
 	if count == 0 then
@@ -30,6 +29,9 @@ vim.keymap.set("n", "<leader>hh", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<leader>ll", "<C-w>l", { desc = "Move to right window" })
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
+
+vim.keymap.set('v', '<Tab>', '>gv')
+vim.keymap.set('v', '<S-Tab>', '<gv')
 
 -- Language Servers
 
