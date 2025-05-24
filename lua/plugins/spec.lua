@@ -105,18 +105,27 @@ return {
 
 	-- Theme
 	{
-		"rose-pine/neovim",
-		name = "rose-pine",
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
 		config = function()
-			require("rose-pine").setup({
-				highlight_groups = {
-					["String"] = { fg = "#27d653" },
-				},
-			})
-
-			vim.cmd("colorscheme rose-pine")
-		end,
+			vim.cmd("colorscheme tokyonight")
+		end
 	},
+-- 	{
+-- 		"rose-pine/neovim",
+-- 		name = "rose-pine",
+-- 		config = function()
+-- 			require("rose-pine").setup({
+-- 				highlight_groups = {
+-- 					["String"] = { fg = "#27d653" },
+-- 				},
+-- 			})
+-- 
+-- 			vim.cmd("colorscheme rose-pine")
+-- 		end,
+-- 	},
 	{
 		"rktjmp/lush.nvim",
 	},
