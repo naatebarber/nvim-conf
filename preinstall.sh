@@ -9,3 +9,5 @@ echo "Installing ripgrep"
 cargo install ripgrep
 echo "Installing stylua"
 cargo install stylua
+echo "Installing fd"
+cargo install fd-find
