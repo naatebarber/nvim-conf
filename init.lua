@@ -27,6 +27,7 @@ vim.keymap.set("n", "<leader>kk", "<C-w>k", { desc = "Move to upper window" })
 vim.keymap.set("n", "<leader>jj", "<C-w>j", { desc = "Move to lower window" })
 vim.keymap.set("n", "<leader>hh", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<leader>ll", "<C-w>l", { desc = "Move to right window" })
+vim.keymap.set('n', '<leader><Tab>', '<C-6>', { desc = 'Switch to alt buffer' })
 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
