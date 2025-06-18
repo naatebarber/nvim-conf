@@ -12,6 +12,7 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find f
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Telescope old files" })
 
 vim.keymap.set("n", "<leader>nf", ":Neotree float <CR>", { desc = "Open Neotree" })
 
@@ -58,7 +59,7 @@ lspconfig.rust_analyzer.setup({
 })
 
 lspconfig.ts_ls.setup({
-	filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript.jsx", "javascriptreact", "javascript" },
+	filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
 	cmd = { "typescript-language-server", "--stdio" },
 	root_dir = lspconfig.util.root_pattern("tsconfig.json"),
 })
