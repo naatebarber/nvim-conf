@@ -1,4 +1,7 @@
 return {
+
+	--- Environment
+
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = function()
@@ -56,13 +59,25 @@ return {
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
- 	{
- 		"windwp/nvim-autopairs",
- 		event = "InsertEnter",
- 		config = true,
- 		-- use opts = {} for passing setup options
- 		-- this is equivalent to setup({}) function
- 	},
+	{
+		"ojroques/nvim-osc52",
+		config = function()
+			require("osc52").setup({
+				max_length = 0, -- no limit
+				silent = true,
+				trim = false,
+			})
+
+			-- Automatically copy with y
+			local function copy()
+				if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+					require("osc52").copy_register('"')
+				end
+			end
+
+			vim.api.nvim_create_autocmd("TextYankPost", { callback = copy })
+		end,
+	},
 
 	-- Language Server and Autocompletion
 
@@ -77,6 +92,8 @@ return {
 		},
 		opts = function()
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+
 			return {
 				snippet = {
 					expand = function(args)
@@ -93,6 +110,26 @@ return {
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
 					["<Tab>"] = cmp.mapping.confirm({ select = true }),
+					--
+					-- ['<Tab>'] = function(fallback)
+					-- 	if cmp.visible() then
+					-- 		cmp.confirm()
+					-- 	elseif luasnip.expand_or_jumpable() then
+					-- 		luasnip.expand_or_jump()
+					-- 	else
+					-- 		fallback()
+					-- 	end
+					-- end,
+					--
+					-- ['<S-Tab>'] = function(fallback)
+					-- 	if cmp.visible() then
+					-- 		cmp.confirm()
+					-- 	elseif luasnip.jumpable(-1) then
+					-- 		luasnip.jump(-1)
+					-- 	else
+					-- 		fallback()
+					-- 	end
+					-- end,
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
@@ -102,8 +139,26 @@ return {
 			}
 		end,
 	},
+	{
+		"windwp/nvim-ts-autotag",
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+		-- use opts = {} for passing setup options
+		-- this is equivalent to setup({}) function
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		config = function()
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	},
 
 	-- Theme
+
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -111,21 +166,21 @@ return {
 		opts = {},
 		config = function()
 			vim.cmd("colorscheme tokyonight")
-		end
+		end,
 	},
--- 	{
--- 		"rose-pine/neovim",
--- 		name = "rose-pine",
--- 		config = function()
--- 			require("rose-pine").setup({
--- 				highlight_groups = {
--- 					["String"] = { fg = "#27d653" },
--- 				},
--- 			})
--- 
--- 			vim.cmd("colorscheme rose-pine")
--- 		end,
--- 	},
+	-- 	{
+	-- 		"rose-pine/neovim",
+	-- 		name = "rose-pine",
+	-- 		config = function()
+	-- 			require("rose-pine").setup({
+	-- 				highlight_groups = {
+	-- 					["String"] = { fg = "#27d653" },
+	-- 				},
+	-- 			})
+	--
+	-- 			vim.cmd("colorscheme rose-pine")
+	-- 		end,
+	-- 	},
 	{
 		"rktjmp/lush.nvim",
 	},

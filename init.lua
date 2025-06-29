@@ -24,16 +24,24 @@ vim.keymap.set("n", "<leader>nt", function()
 	vim.cmd("ToggleTerm" .. count)
 end, { desc = "Open Terminal" })
 
+-- Window navigation
 vim.keymap.set("n", "<leader>kk", "<C-w>k", { desc = "Move to upper window" })
 vim.keymap.set("n", "<leader>jj", "<C-w>j", { desc = "Move to lower window" })
 vim.keymap.set("n", "<leader>hh", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<leader>ll", "<C-w>l", { desc = "Move to right window" })
-vim.keymap.set('n', '<leader><Tab>', '<C-6>', { desc = 'Switch to alt buffer' })
+vim.keymap.set("n", "<leader><Tab>", "<C-6>", { desc = "Switch to alt buffer" })
 
+-- Escaping the terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
-vim.keymap.set('v', '<Tab>', '>gv')
-vim.keymap.set('v', '<S-Tab>', '<gv')
+-- Moving things around in visual mode
+vim.keymap.set("x", "<Tab>", ">gv")
+vim.keymap.set("x", "<S-Tab>", "<gv")
+
+-- Copying and pasting to system clipboard by default (handling with osc52 for cross-shell)
+-- vim.keymap.set({ 'v', 'n' }, 'y', '"+y', { noremap = true, silent = true })
+-- vim.keymap.set({ 'v', 'n' }, 'd', '"+d', { noremap = true, silent = true })
+-- vim.keymap.set({ 'v', 'n' }, 'p', '"+p', { noremap = true, silent = true })
 
 -- Language Servers
 
