@@ -72,6 +72,18 @@ lspconfig.ts_ls.setup({
 	root_dir = lspconfig.util.root_pattern("tsconfig.json"),
 })
 
+lspconfig.emmet_ls.setup({
+	filetypes = {
+		"html",
+		"css",
+		"scss",
+		"javascriptreact",
+		"typescriptreact",
+		"jsx",
+		"tsx",
+	},
+})
+
 lspconfig.pyright.setup({})
 
 -- Theme

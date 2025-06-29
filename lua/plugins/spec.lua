@@ -7,6 +7,19 @@ return {
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
+		opts = {
+			ensure_installed = {
+				"typescriptreact",
+				"javascriptreact",
+				"javascript",
+				"typescript",
+				"html",
+				"css",
+				"rust",
+				"python",
+			},
+			highlight = { enable = true },
+		},
 	},
 	{
 		"nvim-telescope/telescope.nvim",
