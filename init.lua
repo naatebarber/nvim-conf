@@ -84,7 +84,13 @@ lspconfig.emmet_ls.setup({
 	},
 })
 
-lspconfig.pyright.setup({})
+lspconfig.pyright.setup({
+	settings = {
+		python = {
+			pythonPath = "/usr/local/bin/python"
+		},
+	},
+})
 
 -- Theme
 
