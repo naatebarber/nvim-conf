@@ -45,10 +45,7 @@ vim.keymap.set("x", "<S-Tab>", "<gv")
 
 -- Language Servers
 
-vim.lsp.config["rustls"] = {
-	cmd = { "rust_analyzer" },
-	filetypes = { "rs" },
-	root_markers = { "Cargo.toml", "Cargo.lock" },
+vim.lsp.config["rust_analyzer"] = {
 	settings = {
 		rust_analyzer = {
 			useLibraryCodeForTypes = true,
@@ -94,7 +91,7 @@ vim.lsp.config["emmet_ls"] = {
 	},
 }
 
-vim.lsp.enable("rustls")
+vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("pyright")
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("emmet_ls")
