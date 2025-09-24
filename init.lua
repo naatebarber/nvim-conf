@@ -45,9 +45,10 @@ vim.keymap.set("x", "<S-Tab>", "<gv")
 
 -- Language Servers
 
-local lspconfig = require("lspconfig")
-
-lspconfig.rust_analyzer.setup({
+vim.lsp.config["rustls"] = {
+	cmd = { "rust_analyzer" },
+	filetypes = { "rs" },
+	root_markers = { "Cargo.toml", "Cargo.lock" },
 	settings = {
 		rust_analyzer = {
 			useLibraryCodeForTypes = true,
@@ -64,15 +65,24 @@ lspconfig.rust_analyzer.setup({
 			},
 		},
 	},
-})
+}
 
-lspconfig.ts_ls.setup({
-	filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
+vim.lsp.config["ts_ls"] = {
+	filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript", "ts", "tsx" },
 	cmd = { "typescript-language-server", "--stdio" },
-	root_dir = lspconfig.util.root_pattern("tsconfig.json"),
-})
+	root_markers = { "tsconfig.json" },
+	-- root_dir = lspconfig.util.root_pattern("tsconfig.json"),
+}
 
-lspconfig.emmet_ls.setup({
+vim.lsp.config["pyright"] = {
+	settings = {
+		python = {
+			pythonPath = "/usr/local/bin/python",
+		},
+	},
+}
+
+vim.lsp.config["emmet_ls"] = {
 	filetypes = {
 		"html",
 		"css",
@@ -82,15 +92,12 @@ lspconfig.emmet_ls.setup({
 		"jsx",
 		"tsx",
 	},
-})
+}
 
-lspconfig.pyright.setup({
-	settings = {
-		python = {
-			pythonPath = "/usr/local/bin/python"
-		},
-	},
-})
+vim.lsp.enable("rustls")
+vim.lsp.enable("pyright")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("emmet_ls")
 
 -- Theme
 
