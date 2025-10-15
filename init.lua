@@ -74,7 +74,7 @@ vim.lsp.config["ts_ls"] = {
 vim.lsp.config["pyright"] = {
 	settings = {
 		python = {
-			pythonPath = "/usr/local/bin/python",
+			-- pythonPath = "/usr/local/bin/python",
 		},
 		analysis = { typeCheckingMode = "basic" }
 	},
@@ -85,6 +85,16 @@ vim.lsp.config["pyright"] = {
       vim.lsp.semantic_tokens.start(bufnr, client.id)
     end
   end,
+
+	before_init = function(_, config)
+		local venv = os.getenv("VIRTUAL_ENV")
+		if venv then
+			config.settings.python.pythonPath = venv .. "/bin/python"
+			return
+		end
+
+		config.settings.python.pythonPath = "/usr/local/bin/python"
+	end
 }
 
 vim.lsp.config["emmet_ls"] = {
