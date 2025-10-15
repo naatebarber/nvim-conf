@@ -76,7 +76,15 @@ vim.lsp.config["pyright"] = {
 		python = {
 			pythonPath = "/usr/local/bin/python",
 		},
+		analysis = { typeCheckingMode = "basic" }
 	},
+
+	on_attach = function(client, bufnr)
+    -- enable semantic tokens if supported
+    if client.server_capabilities.semanticTokensProvider then
+      vim.lsp.semantic_tokens.start(bufnr, client.id)
+    end
+  end,
 }
 
 vim.lsp.config["emmet_ls"] = {

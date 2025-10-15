@@ -96,6 +96,7 @@ return {
 			vim.api.nvim_create_autocmd("TextYankPost", { callback = copy })
 		end,
 	},
+	{ "tpope/vim-surround" },
 
 	-- Language Server and Autocompletion
 

@@ -11,3 +11,5 @@ echo "Installing stylua"
 cargo install stylua
 echo "Installing fd"
 cargo install fd-find
+echo "Installing pynvim"
+pip install pynvim --upgrade
