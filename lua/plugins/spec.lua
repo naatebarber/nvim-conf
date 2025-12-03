@@ -111,7 +111,6 @@ return {
 		},
 		opts = function()
 			local cmp = require("cmp")
-			local luasnip = require("luasnip")
 
 			return {
 				snippet = {
@@ -168,13 +167,13 @@ return {
 		-- use opts = {} for passing setup options
 		-- this is equivalent to setup({}) function
 	},
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = { "rafamadriz/friendly-snippets" },
-		config = function()
-			require("luasnip.loaders.from_vscode").lazy_load()
-		end,
-	},
+	-- {
+	-- 	"L3MON4D3/LuaSnip",
+	-- 	dependencies = { "rafamadriz/friendly-snippets" },
+	-- 	config = function()
+	-- 		require("luasnip.loaders.from_vscode").lazy_load()
+	-- 	end,
+	-- },
 
 	-- Theme
 

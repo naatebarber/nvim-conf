@@ -1,5 +1,6 @@
 require("config.lazy")
 
+vim.cmd.colorscheme('tokyonight-night')
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -101,8 +102,8 @@ vim.lsp.config["emmet_ls"] = {
 
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("pyright")
-vim.lsp.enable("ts_ls")
 vim.lsp.enable("emmet_ls")
+vim.lsp.enable("ts_ls")
 
 -- Theme
 
