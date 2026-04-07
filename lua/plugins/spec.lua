@@ -103,6 +103,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 	},
+	{ "Vimjas/vim-python-pep8-indent" },
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {

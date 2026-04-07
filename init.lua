@@ -1,6 +1,8 @@
 require("config.lazy")
 
-vim.cmd.colorscheme('tokyonight-night')
+-- vim.cmd.colorscheme('tokyonight-night')
+vim.cmd.colorscheme('default')
+
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -14,6 +16,7 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live gr
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Telescope old files" })
+vim.keymap.set("n", "<leader>fc", ":Telescope colorscheme <CR>", { desc = "Telescope colorscheme" })
 
 vim.keymap.set("n", "<leader>nf", ":Neotree float <CR>", { desc = "Open Neotree" })
 
@@ -24,6 +27,8 @@ vim.keymap.set("n", "<leader>nt", function()
 	end
 	vim.cmd("ToggleTerm" .. count)
 end, { desc = "Open Terminal" })
+
+vim.keymap.set("n", "<leader>ft", ":ToggleTerm direction=float <CR>", { desc = "Open floating terminal"})
 
 -- Window navigation
 vim.keymap.set("n", "<leader>kk", "<C-w>k", { desc = "Move to upper window" })
