@@ -7,10 +7,10 @@ return {
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
+		main = "nvim-treesitter.configs",
 		opts = {
 			ensure_installed = {
-				"typescriptreact",
-				"javascriptreact",
+				"tsx",
 				"javascript",
 				"typescript",
 				"html",

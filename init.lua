@@ -1,7 +1,7 @@
 require("config.lazy")
 
--- vim.cmd.colorscheme('tokyonight-night')
-vim.cmd.colorscheme('default')
+vim.cmd.colorscheme('tokyonight-night')
+-- vim.cmd.colorscheme('default')
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
