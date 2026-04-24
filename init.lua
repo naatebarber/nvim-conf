@@ -77,30 +77,27 @@ vim.lsp.config["ts_ls"] = {
 	-- root_dir = lspconfig.util.root_pattern("tsconfig.json"),
 }
 
+local function resolve_python()
+	local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+	if venv then return venv .. "/bin/python" end
+	local py = vim.fn.exepath("python3")
+	if py == "" then py = vim.fn.exepath("python") end
+	return py ~= "" and py or "/usr/local/bin/python"
+end
+
 vim.lsp.config["pyright"] = {
 	settings = {
 		python = {
-			-- pythonPath = "/usr/local/bin/python",
+			pythonPath = resolve_python(),
+			analysis = { typeCheckingMode = "basic" },
 		},
-		analysis = { typeCheckingMode = "basic" }
 	},
 
 	on_attach = function(client, bufnr)
-    -- enable semantic tokens if supported
-    if client.server_capabilities.semanticTokensProvider then
-      vim.lsp.semantic_tokens.start(bufnr, client.id)
-    end
-  end,
-
-	before_init = function(_, config)
-		local venv = os.getenv("VIRTUAL_ENV")
-		if venv then
-			config.settings.python.pythonPath = venv .. "/bin/python"
-			return
+		if client.server_capabilities.semanticTokensProvider then
+			vim.lsp.semantic_tokens.start(bufnr, client.id)
 		end
-
-		config.settings.python.pythonPath = "/usr/local/bin/python"
-	end
+	end,
 }
 
 vim.lsp.config["emmet_ls"] = {
