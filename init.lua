@@ -1,6 +1,6 @@
 require("config.lazy")
 
-vim.cmd.colorscheme('tokyonight-night')
+vim.cmd.colorscheme("tokyonight-night")
 -- vim.cmd.colorscheme('default')
 
 vim.opt.tabstop = 2
@@ -28,7 +28,7 @@ vim.keymap.set("n", "<leader>nt", function()
 	vim.cmd("ToggleTerm" .. count)
 end, { desc = "Open Terminal" })
 
-vim.keymap.set("n", "<leader>ft", ":ToggleTerm direction=float <CR>", { desc = "Open floating terminal"})
+vim.keymap.set("n", "<leader>ft", ":ToggleTerm direction=float <CR>", { desc = "Open floating terminal" })
 
 -- Window navigation
 vim.keymap.set("n", "<leader>kk", "<C-w>k", { desc = "Move to upper window" })
@@ -49,7 +49,22 @@ vim.keymap.set("x", "<S-Tab>", "<gv")
 -- vim.keymap.set({ 'v', 'n' }, 'd', '"+d', { noremap = true, silent = true })
 -- vim.keymap.set({ 'v', 'n' }, 'p', '"+p', { noremap = true, silent = true })
 
+-- Treesitter highlighting
+-- The main branch no longer auto-enables highlighting, so start it per-buffer.
+-- pcall swallows the error for filetypes that have no installed parser.
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function()
+		pcall(vim.treesitter.start)
+	end,
+})
+
 -- Language Servers
+
+-- Advertise blink.cmp's completion capabilities to every LSP server so they
+-- return rich completions (snippets, auto-imports, resolve support).
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+})
 
 vim.lsp.config["rust_analyzer"] = {
 	settings = {
@@ -79,9 +94,13 @@ vim.lsp.config["ts_ls"] = {
 
 local function resolve_python()
 	local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
-	if venv then return venv .. "/bin/python" end
+	if venv then
+		return venv .. "/bin/python"
+	end
 	local py = vim.fn.exepath("python3")
-	if py == "" then py = vim.fn.exepath("python") end
+	if py == "" then
+		py = vim.fn.exepath("python")
+	end
 	return py ~= "" and py or "/usr/local/bin/python"
 end
 
@@ -123,6 +142,13 @@ require("neo-tree").setup({
 	popup_border_style = "rounded",
 	window = {
 		position = "float",
+	},
+	filesystem = {
+		filtered_items = {
+			visible = false, -- false = actually apply the hides below (toggle with H)
+			hide_dotfiles = true,
+			hide_gitignored = true,
+		},
 	},
 })
 

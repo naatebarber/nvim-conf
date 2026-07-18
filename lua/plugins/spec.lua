@@ -3,13 +3,16 @@ return {
 	--- Environment
 
 	{
+		-- main branch is a full rewrite (required for Neovim 0.12; master is frozen).
+		-- No opts table / ensure_installed / highlight.enable anymore — parsers are
+		-- installed explicitly here, and highlighting is turned on via a FileType
+		-- autocmd in init.lua (see "Treesitter highlighting").
 		"nvim-treesitter/nvim-treesitter",
-		build = function()
-			require("nvim-treesitter.install").update({ with_sync = true })()
-		end,
-		main = "nvim-treesitter.configs",
-		opts = {
-			ensure_installed = {
+		branch = "main",
+		lazy = false,
+		build = ":TSUpdate",
+		config = function()
+			require("nvim-treesitter").install({
 				"tsx",
 				"javascript",
 				"typescript",
@@ -19,16 +22,11 @@ return {
 				"python",
 				"markdown",
 				"markdown_inline",
-			},
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "markdown" },
-			},
-		},
+			})
+		end,
 	},
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
 	},
 	{
 		"akinsho/toggleterm.nvim",
@@ -48,11 +46,9 @@ return {
 			{ "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
 		},
 		lazy = false, -- neo-tree will lazily load itself
-		---@module "neo-tree"
-		---@type neotree.Config?
-		opts = {
-			-- fill any relevant options here
-		},
+		-- Configured via require("neo-tree").setup(...) in init.lua.
+		-- No `opts`/`config` here on purpose, so lazy.nvim doesn't run a
+		-- second, competing setup() with empty options.
 	},
 	{
 		"folke/which-key.nvim",
@@ -98,6 +94,36 @@ return {
 	},
 	{ "tpope/vim-surround" },
 
+	-- Git
+
+	{
+		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {
+			current_line_blame = false, -- toggle with <leader>gb
+			on_attach = function(bufnr)
+				local gs = require("gitsigns")
+				local function map(mode, l, r, desc)
+					vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+				end
+
+				-- Navigation between hunks
+				map("n", "]h", gs.next_hunk, "Next git hunk")
+				map("n", "[h", gs.prev_hunk, "Prev git hunk")
+
+				-- Actions
+				map("n", "<leader>gs", gs.stage_hunk, "Stage hunk")
+				map("n", "<leader>gr", gs.reset_hunk, "Reset hunk")
+				map("n", "<leader>gp", gs.preview_hunk, "Preview hunk")
+				map("n", "<leader>gb", function()
+					gs.blame_line({ full = true })
+				end, "Blame line")
+				map("n", "<leader>gB", gs.toggle_current_line_blame, "Toggle inline blame")
+				map("n", "<leader>gd", gs.diffthis, "Diff this")
+			end,
+		},
+	},
+
 	-- Language Server and Autocompletion
 
 	{
@@ -105,58 +131,35 @@ return {
 	},
 	{ "Vimjas/vim-python-pep8-indent" },
 	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-nvim-lsp" },
+		-- blink.cmp replaces nvim-cmp + cmp-buffer + cmp-nvim-lsp. Built-in
+		-- lsp/buffer/path/snippet sources, so no separate cmp-* source plugins.
+		-- LSP capabilities are wired in init.lua via blink.cmp.get_lsp_capabilities().
+		"saghen/blink.cmp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		version = "1.*", -- prebuilt fuzzy-matcher binary; avoids needing a Rust toolchain
+		opts = {
+			-- Keymap kept the same as the old nvim-cmp setup.
+			keymap = {
+				preset = "none",
+				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-e>"] = { "hide", "fallback" },
+				["<Tab>"] = { "select_and_accept", "fallback" }, -- confirm({ select = true })
+				["<C-b>"] = { "scroll_documentation_up", "fallback" },
+				["<C-f>"] = { "scroll_documentation_down", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback" },
+				["<C-n>"] = { "select_next", "fallback" },
+				["<Up>"] = { "select_prev", "fallback" },
+				["<Down>"] = { "select_next", "fallback" },
+			},
+			completion = {
+				documentation = { auto_show = true },
+				menu = { border = "rounded" },
+			},
+			sources = {
+				default = { "lsp", "buffer", "path", "snippets" },
+			},
 		},
-		opts = function()
-			local cmp = require("cmp")
-
-			return {
-				snippet = {
-					expand = function(args)
-						vim.snippet.expand(args.body)
-					end,
-				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<Tab>"] = cmp.mapping.confirm({ select = true }),
-					--
-					-- ['<Tab>'] = function(fallback)
-					-- 	if cmp.visible() then
-					-- 		cmp.confirm()
-					-- 	elseif luasnip.expand_or_jumpable() then
-					-- 		luasnip.expand_or_jump()
-					-- 	else
-					-- 		fallback()
-					-- 	end
-					-- end,
-					--
-					-- ['<S-Tab>'] = function(fallback)
-					-- 	if cmp.visible() then
-					-- 		cmp.confirm()
-					-- 	elseif luasnip.jumpable(-1) then
-					-- 		luasnip.jump(-1)
-					-- 	else
-					-- 		fallback()
-					-- 	end
-					-- end,
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-				}, {
-					{ name = "buffer" },
-				}),
-			}
-		end,
+		opts_extend = { "sources.default" },
 	},
 	{
 		"windwp/nvim-ts-autotag",
